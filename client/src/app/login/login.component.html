@@ -1,6 +1,9 @@
-<ngx-auth-firebaseui [guestEnabled]="false" 
-(onSuccess)="printUser($event)" (onError)="printError()"> </ngx-auth-firebaseui>
-
+<ngx-auth-firebaseui
+  [guestEnabled]="false"
+  (onSuccess)="printUser($event)"
+  (onError)="printError($event)"
+>
+</ngx-auth-firebaseui>
 
 <!-- <ngx-auth-firebaseui-providers layout="column"></ngx-auth-firebaseui-providers> -->
 <ngx-auth-firebaseui-user></ngx-auth-firebaseui-user>

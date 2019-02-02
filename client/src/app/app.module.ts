@@ -40,7 +40,7 @@ import { MoodLineChartComponent } from './mood-line-chart/mood-line-chart.compon
     LineChartModule,
     PieChartModule,
     TimeagoModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', {
+    ServiceWorkerModule.register('./ngsw-worker.js', {
       enabled: environment.production
     }),
     NgxAuthFirebaseUIModule.forRoot({
