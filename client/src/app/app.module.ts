@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { TimeagoModule } from 'ngx-timeago';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SettingsComponent } from './settings/settings.component';
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,15 @@ import { SettingsComponent } from './settings/settings.component';
     TimeagoModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
+    NgxAuthFirebaseUIModule.forRoot({
+      apiKey: "AIzaSyBmRYvLSHmPdcjuL6Tsa9O16tjYD0jceX0",
+      authDomain: "slo-hacks-2019-45008.firebaseapp.com",
+      databaseURL: "https://slo-hacks-2019-45008.firebaseio.com",
+      projectId: "slo-hacks-2019-45008",
+      storageBucket: "slo-hacks-2019-45008.appspot.com",
+      messagingSenderId: "1054108981104"
+  })
   ],
   providers: [],
   bootstrap: [AppComponent]
