@@ -24,7 +24,7 @@
   </mat-card-actions>
 </mat-card>
 
-<mat-card class="large-card">
+<mat-card class="large-card" *ngIf="lastMoods.length >= 2">
   <mat-card-header>
     <mat-card-title>Mood over time</mat-card-title>
   </mat-card-header>
@@ -41,3 +41,17 @@
     </ngx-charts-line-chart>
   </mat-card-content>
 </mat-card>
+
+<mat-card class="large-card" *ngIf="lastMoods.length >= 2">
+    <mat-card-header>
+      <mat-card-title>Average Mood</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ngx-charts-pie-chart
+        [results]="pieChartData"
+        labels="true"
+      >
+      </ngx-charts-pie-chart>
+    </mat-card-content>
+  </mat-card>
+

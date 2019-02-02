@@ -15,7 +15,7 @@ import { environment } from '../environments/environment';
 import { TimeagoModule } from 'ngx-timeago';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SettingsComponent } from './settings/settings.component';
-import {LineChartModule} from '@swimlane/ngx-charts';
+import { LineChartModule, PieChartModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -33,6 +33,7 @@ import {LineChartModule} from '@swimlane/ngx-charts';
     MaterialModule,
     FormsModule,
     LineChartModule,
+    PieChartModule,
     TimeagoModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production

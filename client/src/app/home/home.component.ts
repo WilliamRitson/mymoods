@@ -18,6 +18,11 @@ export class HomeComponent implements OnInit {
     series: { name: string; value: any }[];
   }[];
 
+  public pieChartData: {
+    name: string;
+    value: number;
+  }[];
+
   constructor(private moodStorage: MoodStorageService) {
     this.lastMoods = moodStorage.getMoodValues();
     this.lineChartData = [
@@ -31,6 +36,18 @@ export class HomeComponent implements OnInit {
         })
       }
     ];
+
+    const moodSums: number[] = new Array(5).fill(0);
+    for (const mood of this.lastMoods) {
+      moodSums[mood.mood]++;
+    }
+
+    this.pieChartData = moodSums.map((sum, index) => {
+      return {
+        name: this.moodEnumToString(index),
+        value: sum
+      };
+    });
   }
 
   ngOnInit() {}
