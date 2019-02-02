@@ -1,4 +1,24 @@
-<p *ngFor="let mood of lastMoods">At {{mood.time | date : 'short'}} you were feeling {{moodEnumToString(mood.mood)}} </p>
-
-<button  mat-raised-button color="primary" routerLink="/new">Add new mood</button>
-
+<mat-card class="large-card">
+  <mat-card-header>
+      <mat-card-title>Your moods</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table>
+      <thead>
+        <th>Mood</th>
+        <th>Time</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mood of lastMoods">
+          <td>{{ moodEnumToString(mood.mood) }}</td>
+          <td>{{ mood.time | timeago:live }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" routerLink="/new">
+      Add mood
+    </button>
+  </mat-card-actions>
+</mat-card>
