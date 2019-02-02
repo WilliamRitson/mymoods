@@ -2,8 +2,8 @@
   <mat-toolbar-row>
     <span>My Moods</span>
     <span class="nav-spacer"></span>
-    <mat-icon class="nav-icon" routerLink="">home</mat-icon>
-    <mat-icon class="nav-icon" routerLink="/settings">settings</mat-icon>
-    <mat-icon class="nav-icon" routerLink="/new">add</mat-icon>
+    <mat-icon class="nav-icon" *ngIf="router.url !== '/'" routerLink="/">home</mat-icon>
+    <mat-icon class="nav-icon" *ngIf="router.url !== '/settings'" routerLink="/settings">settings</mat-icon>
+    <mat-icon class="nav-icon" *ngIf="router.url !== '/new'" routerLink="/new">add</mat-icon>
   </mat-toolbar-row>
 </mat-toolbar>
