@@ -33,6 +33,11 @@ export class MoodStorageService {
     this.storeMoodValues();
   }
 
+  public overwriteMoodRecords(newRecords: MoodRecord[]) {
+    this.moodValues = newRecords;
+    this.storeMoodValues();
+  }
+
   public getMoodValues(): MoodRecord[] {
     return [...this.moodValues];
   }
