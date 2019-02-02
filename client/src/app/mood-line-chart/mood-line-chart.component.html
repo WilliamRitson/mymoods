@@ -1,0 +1,18 @@
+<mat-card class="large-card" *ngIf="lastMoods.length >= 2">
+  <mat-card-header>
+    <mat-card-title>Mood over time</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ngx-charts-line-chart
+      [results]="lineChartData"
+      xAxis="true"
+      yAxis="true"
+      showYAxisLabel="true"
+      yAxisLabel="My Mood"
+      [yAxisTickFormatting]="moodEnumToString"
+      autoScale="true"
+      timeline="true"
+    >
+    </ngx-charts-line-chart>
+  </mat-card-content>
+</mat-card>

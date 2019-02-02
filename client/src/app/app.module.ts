@@ -17,6 +17,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { LineChartModule, PieChartModule } from '@swimlane/ngx-charts';
+import { MoodPieChartComponent } from './mood-pie-chart/mood-pie-chart.component';
+import { MoodLineChartComponent } from './mood-line-chart/mood-line-chart.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { LineChartModule, PieChartModule } from '@swimlane/ngx-charts';
     MoodEntryComponent,
     HomeComponent,
     NavbarComponent,
-    SettingsComponent
+    SettingsComponent,
+    MoodPieChartComponent,
+    MoodLineChartComponent
   ],
   imports: [
     BrowserModule,
