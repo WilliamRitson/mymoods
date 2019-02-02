@@ -11,13 +11,17 @@ import { FormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TimeagoModule } from 'ngx-timeago';
+import { NavbarComponent } from './navbar/navbar.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MoodEntryComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
