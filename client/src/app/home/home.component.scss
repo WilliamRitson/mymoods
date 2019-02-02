@@ -1,0 +1,16 @@
+.mood-table {
+  border-collapse: collapse;
+  min-width: 30vw;
+  text-align: center;
+
+  td {
+    border-width: 0.3px 0px 0.3px 0px;
+    border-color: black;
+    border-style: solid;
+    padding: 10px;
+  }
+
+  tr:nth-child(even) {
+    background-color: rgb(247, 247, 247);
+  }
+}
