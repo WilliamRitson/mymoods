@@ -9,6 +9,9 @@ export class MoodEntryComponent implements OnInit {
 
   constructor() { }
 
+  mood: string;
+  moods: string[] = ['Very Bad', 'Bad', 'Neutral', 'Good', 'Very Good'];
+
   ngOnInit() {
   }
 
