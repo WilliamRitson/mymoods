@@ -5,4 +5,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .large-card {
   margin: 20px;
+  overflow: hidden;
+  float: left;
+  padding: 20px;
 }
