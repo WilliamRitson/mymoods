@@ -13,8 +13,24 @@ import {
 export class HomeComponent implements OnInit {
   public lastMoods: MoodRecord[] = [];
 
+  public lineChartData: {
+    name: string;
+    series: { name: string; value: any }[];
+  }[];
+
   constructor(private moodStorage: MoodStorageService) {
     this.lastMoods = moodStorage.getMoodValues();
+    this.lineChartData = [
+      {
+        name: 'My Mood',
+        series: this.lastMoods.map(moodRecord => {
+          return {
+            name: moodRecord.time.toString(),
+            value: moodRecord.mood
+          };
+        })
+      }
+    ];
   }
 
   ngOnInit() {}

@@ -1,6 +1,6 @@
 <mat-card class="large-card">
   <mat-card-header>
-      <mat-card-title>Your moods</mat-card-title>
+    <mat-card-title>Your moods</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <table class="mood-table">
@@ -11,7 +11,7 @@
       <tbody>
         <tr *ngFor="let mood of lastMoods">
           <td>{{ moodEnumToString(mood.mood) }}</td>
-          <td>{{ mood.time | timeago:live }}</td>
+          <td>{{ mood.time | timeago: live }}</td>
         </tr>
       </tbody>
     </table>
@@ -22,4 +22,22 @@
       Add mood
     </button>
   </mat-card-actions>
+</mat-card>
+
+<mat-card class="large-card">
+  <mat-card-header>
+    <mat-card-title>Mood over time</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ngx-charts-line-chart
+      [results]="lineChartData"
+      xAxis="true"
+      yAxis="true"
+      showYAxisLabel="true"
+      yAxisLabel="My Mood"
+      autoScale="true"
+      timeline="true"
+    >
+    </ngx-charts-line-chart>
+  </mat-card-content>
 </mat-card>

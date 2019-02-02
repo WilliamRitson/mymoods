@@ -15,7 +15,6 @@ export class MoodEntryComponent {
 
   public entryDone() {
     this.moodStorage.addMoodValue(this.moodStingToEnum(this.currentMood));
-    alert('Thanks!');
     this.router.navigateByUrl('/');
 
   }
