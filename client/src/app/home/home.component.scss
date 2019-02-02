@@ -14,3 +14,24 @@
     background-color: rgb(247, 247, 247);
   }
 }
+
+.floating-button {
+  position: fixed;
+  right: 10vmin;
+  bottom: 10vmin;
+}
+
+.greeting {
+  p {
+    font-size: 2.5em;
+    margin: 20px;
+    padding: 15vw;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+}
