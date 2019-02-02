@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 import { MoodEntryComponent } from './mood-entry/mood-entry.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +19,7 @@ import { SettingsComponent } from './settings/settings.component';
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     MoodEntryComponent,
     HomeComponent,
     NavbarComponent,
