@@ -15,7 +15,6 @@ import { TimeagoModule } from 'ngx-timeago';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SettingsComponent } from './settings/settings.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,14 +30,15 @@ import { SettingsComponent } from './settings/settings.component';
     MaterialModule,
     FormsModule,
     TimeagoModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-
-  private ns : NotificationService;
+export class AppModule {
+  private ns: NotificationService;
 
   constructor(ns: NotificationService) {
     this.ns = ns;
@@ -46,6 +46,9 @@ export class AppModule {
     const d = new Date();
 
     console.log('Schedduling a notifcation in one minute!');
-    ns.scheduleNewNotifcation({ body: 'Time to enter your current mood!' }, 60 * d.getHours() + d.getMinutes() + 1);
+    ns.scheduleNewNotifcation(
+      { body: 'Time to enter your current mood!' },
+      60 * d.getHours() + d.getMinutes() + 1
+    );
   }
 }
