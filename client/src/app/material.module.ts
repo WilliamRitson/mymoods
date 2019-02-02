@@ -15,7 +15,7 @@ import {
     MatSlideToggleModule,
     MatSnackBarModule,
     MatToolbarModule,
-    MatTooltipModule
+    MatTooltipModule,
 } from '@angular/material';
 
 const matModules = [

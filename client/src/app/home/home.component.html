@@ -1,3 +1,4 @@
-<p>
-  home works!
-</p>
+<p *ngFor="let mood of lastMoods">At {{mood.time | date : 'short'}} you were feeling {{moodEnumToString(mood.mood)}} </p>
+
+<button  mat-raised-button color="primary" routerLink="/new">Add new mood</button>
+
