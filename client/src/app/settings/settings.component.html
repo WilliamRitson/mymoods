@@ -7,3 +7,30 @@
   <mat-icon>get_app</mat-icon>
   Export CSV Data
 </button>
+
+<input
+  #jsonInput
+  hidden
+  type="file"
+  (change)="importJSON($event)"
+  placeHolder="Upload JSON Data"
+  accept=".json"
+  single
+/>
+<button type="button" mat-raised-button color="primary" (click)="jsonInput.click()">
+  <mat-icon>file_upload</mat-icon> Import JSON Data
+</button>
+
+
+<input
+  #csvInput
+  hidden
+  type="file"
+  (change)="importCSV($event)"
+  placeHolder="Upload CSV Data"
+  accept=".csv"
+  single
+/>
+<button type="button" mat-raised-button color="primary" (click)="csvInput.click()">
+  <mat-icon>file_upload</mat-icon> Import CSV Data
+</button>

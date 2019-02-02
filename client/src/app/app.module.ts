@@ -17,6 +17,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { LineChartModule, PieChartModule } from '@swimlane/ngx-charts';
+import { MoodPieChartComponent } from './mood-pie-chart/mood-pie-chart.component';
+import { MoodLineChartComponent } from './mood-line-chart/mood-line-chart.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { LineChartModule, PieChartModule } from '@swimlane/ngx-charts';
     MoodEntryComponent,
     HomeComponent,
     NavbarComponent,
-    SettingsComponent
+    SettingsComponent,
+    MoodPieChartComponent,
+    MoodLineChartComponent
   ],
   imports: [
     BrowserModule,
@@ -40,13 +44,13 @@ import { LineChartModule, PieChartModule } from '@swimlane/ngx-charts';
       enabled: environment.production
     }),
     NgxAuthFirebaseUIModule.forRoot({
-      apiKey: "AIzaSyBmRYvLSHmPdcjuL6Tsa9O16tjYD0jceX0",
-      authDomain: "slo-hacks-2019-45008.firebaseapp.com",
-      databaseURL: "https://slo-hacks-2019-45008.firebaseio.com",
-      projectId: "slo-hacks-2019-45008",
-      storageBucket: "slo-hacks-2019-45008.appspot.com",
-      messagingSenderId: "1054108981104"
-  })
+      apiKey: 'AIzaSyBmRYvLSHmPdcjuL6Tsa9O16tjYD0jceX0',
+      authDomain: 'slo-hacks-2019-45008.firebaseapp.com',
+      databaseURL: 'https://slo-hacks-2019-45008.firebaseio.com',
+      projectId: 'slo-hacks-2019-45008',
+      storageBucket: 'slo-hacks-2019-45008.appspot.com',
+      messagingSenderId: '1054108981104'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,10 @@
-<mat-card class="large-card">
+<div class="greeting" *ngIf="lastMoods.length == 0">
+  <p>
+    Please click the button in the bottom right corner to get started.
+  </p>
+</div>
+
+<mat-card class="large-card" *ngIf="lastMoods.length > 0">
   <mat-card-header>
     <mat-card-title>Your moods</mat-card-title>
   </mat-card-header>
@@ -16,43 +22,20 @@
       </tbody>
     </table>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="primary" routerLink="/new">
-      <mat-icon>add</mat-icon>
-      Add mood
-    </button>
-  </mat-card-actions>
+  <mat-card-actions> </mat-card-actions>
 </mat-card>
 
-<mat-card class="large-card" *ngIf="lastMoods.length >= 2">
-  <mat-card-header>
-    <mat-card-title>Mood over time</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <ngx-charts-line-chart
-      [results]="lineChartData"
-      xAxis="true"
-      yAxis="true"
-      showYAxisLabel="true"
-      yAxisLabel="My Mood"
-      [yAxisTickFormatting]="moodEnumToString"
-      autoScale="true"
-      timeline="true"
-    >
-    </ngx-charts-line-chart>
-  </mat-card-content>
-</mat-card>
+<app-mood-line-chart></app-mood-line-chart>
 
-<mat-card class="large-card" *ngIf="lastMoods.length >= 2">
-    <mat-card-header>
-      <mat-card-title>Average Mood</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <ngx-charts-pie-chart
-        [results]="pieChartData"
-        labels="true"
-      >
-      </ngx-charts-pie-chart>
-    </mat-card-content>
-  </mat-card>
+<app-mood-pie-chart></app-mood-pie-chart>
 
+<button
+  class="floating-button"
+  mat-fab
+  color="primary"
+  routerLink="/new"
+  matTooltip="Record your mood"
+  matTooltipPosition="above"
+>
+  <mat-icon>add</mat-icon>
+</button>
