@@ -19,6 +19,9 @@ import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { LineChartModule, PieChartModule } from '@swimlane/ngx-charts';
 import { MoodPieChartComponent } from './mood-pie-chart/mood-pie-chart.component';
 import { MoodLineChartComponent } from './mood-line-chart/mood-line-chart.component';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { AuthGuard } from './core/auth.guard';
 
 @NgModule({
   declarations: [
@@ -50,15 +53,25 @@ import { MoodLineChartComponent } from './mood-line-chart/mood-line-chart.compon
       projectId: 'slo-hacks-2019-45008',
       storageBucket: 'slo-hacks-2019-45008.appspot.com',
       messagingSenderId: '1054108981104'
+    }, () => 'MyMoods', {
+      enableFirestoreSync: false, // enable/disable autosync users with firestore
+      onlyEmailPasswordAuth : false, // enable/disable signin/up with auth providers like google, facebook, twitter - default: false
+      toastMessageOnAuthSuccess: true, // whether to open/show a snackbar message on auth success - default : true
+      toastMessageOnAuthError: true // whether to open/show a snackbar message on auth error - default : true
     })
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   private ns: NotificationService;
 
-  constructor(ns: NotificationService) {
+  constructor(ns: NotificationService, angularAuth: AngularFireAuth, router: Router) {
+    angularAuth.user.subscribe(user => {
+      if (!user && router.url !== '/login') {
+        router.navigateByUrl('/login');
+      }
+    });
     this.ns = ns;
 
     const d = new Date();
