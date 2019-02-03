@@ -17,19 +17,31 @@ export interface MoodRecord {
   providedIn: 'root'
 })
 export class MoodStorageService {
-  private static localStorageName = 'mood-storage';
+  private static localMoodStorageName = 'mood-storage';
+  private static localKeywordStorageName = 'keyword-storage';
 
   private moodValues: MoodRecord[];
+  private keywordValues: Object;
 
   constructor() {
     this.moodValues = this.loadMoodValues();
+    this.keywordValues = this.loadKeywordValues();
   }
 
-  public addMoodValue(newValue: MoodValue) {
+  public addMoodValue(newValue: MoodValue, keywords: string[]) {
     this.moodValues.push({
       time: new Date(),
       mood: newValue
     });
+    keywords.forEach(word => {
+      let moodValuesForWord = this.keywordValues[word];
+      if (!(moodValuesForWord)) {
+        moodValuesForWord = [];
+        this.keywordValues[word] = moodValuesForWord;
+      }
+      moodValuesForWord.push(newValue);
+    });
+    this.storeKeywordValues();
     this.storeMoodValues();
   }
 
@@ -42,8 +54,16 @@ export class MoodStorageService {
     return [...this.moodValues];
   }
 
+  private loadKeywordValues(): Object {
+    const data = localStorage.getItem(MoodStorageService.localKeywordStorageName);
+    if (!data) {
+      return {};
+    }
+    return JSON.parse(data);
+  }
+
   private loadMoodValues(): MoodRecord[] {
-    const data = localStorage.getItem(MoodStorageService.localStorageName);
+    const data = localStorage.getItem(MoodStorageService.localMoodStorageName);
     if (!data) {
       return [];
     }
@@ -56,8 +76,11 @@ export class MoodStorageService {
   }
 
   private storeMoodValues() {
-    localStorage.setItem(MoodStorageService.localStorageName, JSON.stringify(this.moodValues));
+    localStorage.setItem(MoodStorageService.localMoodStorageName, JSON.stringify(this.moodValues));
   }
 
+  private storeKeywordValues() {
+    localStorage.setItem(MoodStorageService.localKeywordStorageName, JSON.stringify(this.keywordValues));
+  }
 
 }

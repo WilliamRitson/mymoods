@@ -1,38 +1,42 @@
-<div class="greeting" *ngIf="lastMoods.length == 0">
-  <p>
-    Please click the button in the bottom right corner to get started.
-  </p>
+<div class="home-layout">
+  <div class="greeting" *ngIf="lastMoods.length == 0">
+    <p>
+      Please click the button in the bottom right corner to get started.
+    </p>
+  </div>
+
+  <div class="grid-tile">
+    <mat-card class="large-card" *ngIf="lastMoods.length > 0">
+
+      <mat-card-header>
+        <mat-card-title>Your moods</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table class="mood-table">
+          <thead>
+            <th>Mood</th>
+            <th>Time</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mood of lastMoods">
+              <td>{{ moodEnumToString(mood.mood) }}</td>
+              <td>{{ mood.time | timeago: live }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+      <mat-card-actions> </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="grid-tile">
+    <app-mood-line-chart></app-mood-line-chart>
+  </div>
+
+  <div class="grid-tile">
+    <app-mood-pie-chart></app-mood-pie-chart>
+  </div>
 </div>
-
-<mat-card class="large-card" *ngIf="lastMoods.length > 0">
-  <mat-card-header>
-    <mat-card-title>Your moods</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <table class="mood-table">
-      <thead>
-        <th>Mood</th>
-        <th>Time</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let mood of lastMoods">
-          <td>{{ moodEnumToString(mood.mood) }}</td>
-          <td>{{ mood.time | timeago: live }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </mat-card-content>
-  <mat-card-actions> </mat-card-actions>
-</mat-card>
-
-<div class="chart-list">
-  <app-mood-line-chart></app-mood-line-chart>
-
-  <app-mood-pie-chart></app-mood-pie-chart>
-
-  <app-mood-heatmap-chart></app-mood-heatmap-chart>
-</div>
-
 
 <button
   class="floating-button"

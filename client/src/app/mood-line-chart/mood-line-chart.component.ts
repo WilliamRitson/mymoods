@@ -12,6 +12,7 @@ import {
 })
 export class MoodLineChartComponent implements OnInit {
   public lastMoods: MoodRecord[] = [];
+  public view: number[];
 
   public lineChartData: {
     name: string;
@@ -33,7 +34,13 @@ export class MoodLineChartComponent implements OnInit {
     ];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.view = [window.innerWidth / 1.35, 350];
+  }
+
+  onResize(event) {
+    this.view = [event.target.innerWidth / 1.35, 350];
+  }
 
   public moodEnumToString(string: MoodValue): string {
     switch (string) {

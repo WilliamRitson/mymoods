@@ -8,7 +8,7 @@ import { MoodStorageService, MoodRecord, MoodValue } from '../mood-storage.servi
 })
 export class MoodPieChartComponent implements OnInit {
   public lastMoods: MoodRecord[] = [];
-
+  public view: number[];
 
   public pieChartData: {
     name: string;
@@ -31,7 +31,13 @@ export class MoodPieChartComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.view = [window.innerWidth / 1.35, 375];
+  }
+
+  onResize(event) {
+    this.view = [event.target.innerWidth / 1.35, 375];
+  }
 
   public moodEnumToString(string: MoodValue): string {
     switch (string) {

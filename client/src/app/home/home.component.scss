@@ -1,7 +1,31 @@
+:root {
+  --spacing: 24px;
+  --min-card-width: 250px;
+}
+
+.home-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 24px;
+  margin: 20px;
+}
+
+.grid-tile {
+  overflow: hidden;
+  padding: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 .mood-table {
   border-collapse: collapse;
-  min-width: 30vw;
   text-align: center;
+  width: 80%;
+  margin: 0 auto;
 
   td {
     border-width: 0.3px 0px 0.3px 0px;
