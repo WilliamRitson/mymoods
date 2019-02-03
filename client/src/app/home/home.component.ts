@@ -13,6 +13,11 @@ import {
 export class HomeComponent implements OnInit {
   public lastMoods: MoodRecord[] = [];
 
+  public keywords: {
+    keyword: string;
+    score: number;
+  }[] = [];
+
   public lineChartData: {
     name: string;
     series: { name: string; value: any }[];
@@ -47,6 +52,18 @@ export class HomeComponent implements OnInit {
         name: this.moodEnumToString(index),
         value: sum
       };
+    });
+
+    const keywords_raw = moodStorage.getKeywordValues();
+    for (var key in keywords_raw) {     
+      const size = keywords_raw[key].length;
+      this.keywords.push({
+        keyword: key,
+        score: keywords_raw[key].reduce((accumulator, current) => accumulator + current) / size
+      });
+    }
+    this.keywords.sort((a, b) => {
+      return b.score - a.score;
     });
   }
 

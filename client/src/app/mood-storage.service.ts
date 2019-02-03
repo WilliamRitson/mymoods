@@ -50,8 +50,17 @@ export class MoodStorageService {
     this.storeMoodValues();
   }
 
+  public overwriteKeywordRecords(newRecords: Object) {
+    this.keywordValues = newRecords;
+    this.storeKeywordValues();
+  }
+
   public getMoodValues(): MoodRecord[] {
     return [...this.moodValues];
+  }
+
+  public getKeywordValues(): Object {
+    return {...this.keywordValues};
   }
 
   private loadKeywordValues(): Object {

@@ -45,21 +45,26 @@
         <mat-card-title>Data Export</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <button mat-raised-button color="primary" (click)="exportAsJson()">
+        <button mat-raised-button color="primary" (click)="exportMoodsAsJson()">
           <mat-icon>get_app</mat-icon>
-          Export JSON Data
+          Export JSON Mood Data
         </button>
 
-        <button mat-raised-button color="primary" (click)="exportAsCSV()">
+        <button mat-raised-button color="primary" (click)="exportMoodsAsCSV()">
           <mat-icon>get_app</mat-icon>
-          Export CSV Data
+          Export CSV Mood Data
         </button>
+
+        <button mat-raised-button color="primary" (click)="exportKeywordsAsJson()">
+            <mat-icon>get_app</mat-icon>
+            Export JSON Keyword Data
+          </button>
 
         <input
-          #jsonInput
+          #jsonKeywordInput
           hidden
           type="file"
-          (change)="importJSON($event)"
+          (change)="importKeywordJSON($event)"
           placeHolder="Upload JSON Data"
           accept=".json"
           single
@@ -68,16 +73,34 @@
           type="button"
           mat-raised-button
           color="primary"
-          (click)="jsonInput.click()"
+          (click)="jsonKeywordInput.click()"
         >
-          <mat-icon>file_upload</mat-icon> Import JSON Data
+          <mat-icon>file_upload</mat-icon> Import JSON Keyword Data
         </button>
 
         <input
-          #csvInput
+          #jsonMoodInput
           hidden
           type="file"
-          (change)="importCSV($event)"
+          (change)="importMoodJSON($event)"
+          placeHolder="Upload JSON Data"
+          accept=".json"
+          single
+        />
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="jsonMoodInput.click()"
+        >
+          <mat-icon>file_upload</mat-icon> Import JSON Mood Data
+        </button>
+
+        <input
+          #csvMoodInput
+          hidden
+          type="file"
+          (change)="importMoodCSV($event)"
           placeHolder="Upload CSV Data"
           accept=".csv"
           single
@@ -86,9 +109,9 @@
           type="button"
           mat-raised-button
           color="primary"
-          (click)="csvInput.click()"
+          (click)="csvMoodInput.click()"
         >
-          <mat-icon>file_upload</mat-icon> Import CSV Data
+          <mat-icon>file_upload</mat-icon> Import CSV Mood Data
         </button>
       </mat-card-content>
     </mat-card>

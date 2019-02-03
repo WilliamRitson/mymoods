@@ -35,11 +35,11 @@ export class MoodLineChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.view = [window.innerWidth / 1.35, 350];
+    this.view = [window.innerWidth / 1.1, 350];
   }
 
   onResize(event) {
-    this.view = [event.target.innerWidth / 1.35, 350];
+    this.view = [event.target.innerWidth / 1.1, 350];
   }
 
   public moodEnumToString(string: MoodValue): string {
