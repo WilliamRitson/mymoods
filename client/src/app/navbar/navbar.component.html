@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>My Moods</span>
+    <a routerLink="/" class="title"><span>My Moods</span></a>
     <span class="nav-spacer"></span>
     <mat-icon class="nav-icon" *ngIf="loggedIn && router.url !== '/'" routerLink="/">home</mat-icon>
     <mat-icon class="nav-icon" *ngIf="loggedIn && router.url !== '/settings'" routerLink="/settings">settings</mat-icon>

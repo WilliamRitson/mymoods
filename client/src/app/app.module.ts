@@ -16,7 +16,7 @@ import { TimeagoModule } from 'ngx-timeago';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
-import { LineChartModule, PieChartModule } from '@swimlane/ngx-charts';
+import { LineChartModule, PieChartModule, HeatMapModule } from '@swimlane/ngx-charts';
 import { MoodPieChartComponent } from './mood-pie-chart/mood-pie-chart.component';
 import { MoodLineChartComponent } from './mood-line-chart/mood-line-chart.component';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 import { AuthGuard } from './core/auth.guard';
 import { FloorPipe } from './floor.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { MoodHeatmapChartComponent } from './mood-heatmap-chart/mood-heatmap-chart.component';
 
 export function nameFactory() {
   return 'MyMoods';
@@ -39,7 +40,8 @@ export function nameFactory() {
     SettingsComponent,
     MoodPieChartComponent,
     MoodLineChartComponent,
-    FloorPipe
+    FloorPipe,
+    MoodHeatmapChartComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ export function nameFactory() {
     FormsModule,
     LineChartModule,
     PieChartModule,
+    HeatMapModule,
     TimeagoModule.forRoot(),
     HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', {

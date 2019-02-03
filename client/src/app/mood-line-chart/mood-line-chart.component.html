@@ -17,6 +17,7 @@
       tooltipTemplate="tooltipTemplate"
       (window:resize)="onResize($event)"
     >
+    
     <ng-template #tooltipTemplate let-model="model">
       <p>{{model.name | timeago: live}} you were feeling {{moodEnumToString(model.value)}}</p>
     </ng-template>
