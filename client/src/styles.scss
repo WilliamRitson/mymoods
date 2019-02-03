@@ -8,7 +8,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   max-width: 80vw;
   margin: 20px;
   overflow: hidden;
-  float: left;
+  //float: left;
   padding: 20px;
 
+}
+
+.chart-list{
+  display: flex;
+  flex-direction: column;
 }

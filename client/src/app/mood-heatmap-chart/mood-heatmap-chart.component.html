@@ -1,0 +1,20 @@
+<mat-card class="large-card" >
+  <mat-card-header>
+    <mat-card-title>Mood history</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ngx-charts-heat-map
+      [results]="lineChartData"
+    >
+
+    <!-- <ng-template #tooltipTemplate let-model="model">
+      <p>{{model.name | timeago: live}} you were feeling {{moodEnumToString(model.value)}}</p>
+    </ng-template>
+
+    <ng-template #seriesTooltipTemplate let-model="model">
+      <p *ngFor="let series of model">{{moodEnumToString(series.value)}}</p>
+    </ng-template> -->
+
+    </ngx-charts-heat-map>
+  </mat-card-content>
+</mat-card>
