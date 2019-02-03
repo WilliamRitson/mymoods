@@ -24,6 +24,10 @@ import { Router } from '@angular/router';
 import { AuthGuard } from './core/auth.guard';
 import { FloorPipe } from './floor.pipe';
 
+export function nameFactory() {
+  return 'MyMoods';
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,27 +52,33 @@ import { FloorPipe } from './floor.pipe';
     ServiceWorkerModule.register('./ngsw-worker.js', {
       enabled: environment.production
     }),
-    NgxAuthFirebaseUIModule.forRoot({
-      apiKey: 'AIzaSyBmRYvLSHmPdcjuL6Tsa9O16tjYD0jceX0',
-      authDomain: 'slo-hacks-2019-45008.firebaseapp.com',
-      databaseURL: 'https://slo-hacks-2019-45008.firebaseio.com',
-      projectId: 'slo-hacks-2019-45008',
-      storageBucket: 'slo-hacks-2019-45008.appspot.com',
-      messagingSenderId: '1054108981104'
-    }, () => 'MyMoods', {
-      enableFirestoreSync: false, // enable/disable autosync users with firestore
-      onlyEmailPasswordAuth : false, // enable/disable signin/up with auth providers like google, facebook, twitter - default: false
-      toastMessageOnAuthSuccess: true, // whether to open/show a snackbar message on auth success - default : true
-      toastMessageOnAuthError: true // whether to open/show a snackbar message on auth error - default : true
-    })
+    NgxAuthFirebaseUIModule.forRoot(
+      {
+        apiKey: 'AIzaSyBmRYvLSHmPdcjuL6Tsa9O16tjYD0jceX0',
+        authDomain: 'slo-hacks-2019-45008.firebaseapp.com',
+        databaseURL: 'https://slo-hacks-2019-45008.firebaseio.com',
+        projectId: 'slo-hacks-2019-45008',
+        storageBucket: 'slo-hacks-2019-45008.appspot.com',
+        messagingSenderId: '1054108981104'
+      },
+      nameFactory,
+      {
+        enableFirestoreSync: false, // enable/disable autosync users with firestore
+        onlyEmailPasswordAuth: false, // enable/disable signin/up with auth providers like google, facebook, twitter - default: false
+        toastMessageOnAuthSuccess: true, // whether to open/show a snackbar message on auth success - default : true
+        toastMessageOnAuthError: true // whether to open/show a snackbar message on auth error - default : true
+      }
+    )
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  private ns: NotificationService;
-
-  constructor(ns: NotificationService, angularAuth: AngularFireAuth, router: Router) {
+  constructor(
+    private ns: NotificationService,
+    angularAuth: AngularFireAuth,
+    router: Router
+  ) {
     angularAuth.user.subscribe(user => {
       if (!user && router.url !== '/login') {
         router.navigateByUrl('/login');
