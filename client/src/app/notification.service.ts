@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { SwPush } from '@angular/service-worker';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -7,33 +9,56 @@ export class NotificationService {
   private allNotifications: Object;
 
   private static notificationStorageKey = 'notification-settings';
+  private static readonly PUBKEY = 'BLAQHuBcqmChs7LD2XX29KihAI-qtVKl8fBtx3MILzY3zcnV29zf8i5U_C6BpHwcEH5XH7yipDaTGcYygBSYS5g';
+  private static readonly SERVER_URL = 'http://localhost:3000/subscription';
 
-  constructor() {
+  private notificationPermissionGranted : boolean;
+
+  constructor(private swPush: SwPush, private http: HttpClient) {
+
     this.allNotifications = {};
 
-    const notificationSettings = localStorage.getItem(NotificationService.notificationStorageKey);
-    
-    // If stored, then permission already acquired
-    if (notificationSettings) {
-      const parsedSettings = JSON.parse(notificationSettings);
+    // If the sw is available, use it instead of normal browser notifications
+    if (swPush.isEnabled) {
 
-      parsedSettings.forEach(timeOfDay => {
-        this.scheduleNewNotifcation(
-          { body: 'Time to enter your current mood!' },
-          parseInt(timeOfDay));
-      });
+      swPush
+        .requestSubscription({
+          serverPublicKey: NotificationService.PUBKEY
+        })
+        .then(subscription => {
+          this.http.post(NotificationService.SERVER_URL, subscription).subscribe();
+          this.notificationPermissionGranted = true;
+        })
+        .catch((err) => {
+          this.notificationPermissionGranted = false;
+          console.error(err);
+        });
+
     } else {
-      Notification.requestPermission(status => {
-        if (status === 'granted') {
-          // Insert empty data into the local storage to indicate that notif has permission
-          localStorage.setItem(NotificationService.notificationStorageKey, '[]');
-        }
-      });
+      const notificationSettings = localStorage.getItem(NotificationService.notificationStorageKey);
+    
+      // If stored, then permission already acquired
+      if (notificationSettings) {
+        const parsedSettings = JSON.parse(notificationSettings);
+  
+        parsedSettings.forEach(timeOfDay => {
+          this.scheduleNewNotifcation(
+            { body: 'Time to enter your current mood!' },
+            parseInt(timeOfDay));
+        });
+      } else {
+        Notification.requestPermission(status => {
+          if (status === 'granted') {
+            // Insert empty data into the local storage to indicate that notif has permission
+            localStorage.setItem(NotificationService.notificationStorageKey, '[]');
+          }
+        });
+      }
     }
   }
 
   public isGranted() {
-    return Notification.permission === 'granted';
+    return this.notificationPermissionGranted || Notification.permission === 'granted';
   }
 
   public getScheduledNotifications() : Array<number> {

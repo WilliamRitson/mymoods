@@ -23,6 +23,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthGuard } from './core/auth.guard';
 import { FloorPipe } from './floor.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 export function nameFactory() {
   return 'MyMoods';
@@ -49,6 +50,7 @@ export function nameFactory() {
     LineChartModule,
     PieChartModule,
     TimeagoModule.forRoot(),
+    HttpClientModule,
     ServiceWorkerModule.register('./ngsw-worker.js', {
       enabled: environment.production
     }),
