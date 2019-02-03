@@ -32,11 +32,11 @@ export class MoodPieChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.view = [window.innerWidth / 1.35, 375];
+    this.view = [window.innerWidth / 1.1, 375];
   }
 
   onResize(event) {
-    this.view = [event.target.innerWidth / 1.35, 375];
+    this.view = [event.target.innerWidth / 1.1, 375];
   }
 
   public moodEnumToString(string: MoodValue): string {

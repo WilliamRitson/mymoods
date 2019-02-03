@@ -1,4 +1,6 @@
+import { PushSubscription } from 'web-push';
+
 export class CreateSubscriptionDto {
-  readonly time: string;
-  readonly subscription: string;
+  readonly token: string;
+  readonly subscription: PushSubscription;
 }

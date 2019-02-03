@@ -2,6 +2,16 @@ import { Injectable } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { HttpClient } from '@angular/common/http';
 
+interface SetScheduleScheduleDto {
+  readonly token: string;
+  readonly notificaitonTimes: number[];
+}
+
+interface CreateSubscriptionDto {
+  readonly token: string;
+  readonly subscription: PushSubscription;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,15 +19,34 @@ export class NotificationService {
   private static notificationStorageKey = 'notification-settings';
   private static readonly PUBKEY =
     'BLAQHuBcqmChs7LD2XX29KihAI-qtVKl8fBtx3MILzY3zcnV29zf8i5U_C6BpHwcEH5XH7yipDaTGcYygBSYS5g';
-  private static readonly SERVER_URL =
+  private static readonly newSubscriptionUrl =
     'http://localhost:3000/subscriptions/new';
+
+  private static readonly setScheduleUrl =
+    'http://localhost:3000/subscriptions/schedule';
+
+  private static readonly notificationTokenStorage = 'notification-token';
 
   private allNotifications: Object;
   private notificationPermissionGranted: boolean;
 
+  private token: string;
+
   constructor(private swPush: SwPush, private http: HttpClient) {
     this.allNotifications = {};
-    
+
+    if (localStorage.getItem(NotificationService.notificationTokenStorage)) {
+      this.token = localStorage.getItem(
+        NotificationService.notificationTokenStorage
+      );
+    } else {
+      this.token = Math.random().toString(16);
+      localStorage.setItem(
+        NotificationService.notificationTokenStorage,
+        this.token
+      );
+    }
+
     // If the sw is available, use it instead of normal browser notifications
     console.log('Push enabled:', swPush.isEnabled);
     if (swPush.isEnabled) {
@@ -27,9 +56,13 @@ export class NotificationService {
         })
         .then(subscription => {
           this.http
-            .post(NotificationService.SERVER_URL, subscription, {
-              responseType: 'text'
-            })
+            .post(
+              NotificationService.newSubscriptionUrl,
+              { token: this.token, subscription },
+              {
+                responseType: 'text'
+              }
+            )
             .subscribe();
           this.notificationPermissionGranted = true;
         })
@@ -119,5 +152,19 @@ export class NotificationService {
       NotificationService.notificationStorageKey,
       JSON.stringify(Object.keys(this.allNotifications))
     );
+
+    this.saveScheduleToServer();
+  }
+
+  private saveScheduleToServer() {
+    const payload = {
+      notificaitonTimes: Object.keys(this.allNotifications).map(parseInt),
+      token: this.token
+    } as SetScheduleScheduleDto;
+    this.http
+      .post(NotificationService.setScheduleUrl, payload, {
+        responseType: 'text'
+      })
+      .subscribe();
   }
 }

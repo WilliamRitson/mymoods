@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from 'src/config/config.service';
 import { PushSubscription, setVapidDetails, sendNotification } from 'web-push';
+import { SetScheduleScheduleDto } from 'src/setSubscription.dto';
+import { CreateSubscriptionDto } from 'src/subscription.dto';
 
 interface Subscriber {
   subscriptionToken: PushSubscription;
@@ -8,7 +10,8 @@ interface Subscriber {
 
 @Injectable()
 export class SubscriptionService {
-  private subscribers: PushSubscription[] = [];
+  private subscribers = new Map<string, PushSubscription>();
+  private schedules = new Map<string, number[]>();
 
   constructor(configService: ConfigService) {
     setVapidDetails(
@@ -19,8 +22,27 @@ export class SubscriptionService {
     this.notifySubscribers();
   }
 
-  public addSubscription(pushSubscription: PushSubscription) {
-    this.subscribers.push(pushSubscription);
+  public addSubscription(subscriptinDto: CreateSubscriptionDto) {
+    this.subscribers.set(subscriptinDto.token, subscriptinDto.subscription);
+  }
+
+  public setSchedule(scheduleDto: SetScheduleScheduleDto): any {
+    console.log('add schedule',  scheduleDto.notificaitonTimes, 'for', scheduleDto.token);
+    this.schedules.set(scheduleDto.token, scheduleDto.notificaitonTimes);
+  }
+
+  private shouldSetToSubsciber(token: string) {
+    const now = new Date();
+    const timeOfDayInMinutes = now.getHours() * 60 + now.getMinutes();
+    const scheduledReminders = this.schedules.get(token) || [];
+    console.log('the clock strikes', timeOfDayInMinutes);
+    for (const reminder of scheduledReminders) {
+      console.log(reminder, timeOfDayInMinutes);
+      if (reminder === timeOfDayInMinutes) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private notifySubscribers() {
@@ -32,8 +54,16 @@ export class SubscriptionService {
         },
       };
       const promises = [];
-      for (const subscriber of this.subscribers) {
-        promises.push(sendNotification(subscriber, JSON.stringify(payload)));
+      for (const subscriberToken of Array.from(this.subscribers.keys())) {
+        if (this.shouldSetToSubsciber(subscriberToken)) {
+          console.log('notify', subscriberToken);
+          promises.push(
+            sendNotification(
+              this.subscribers.get(subscriberToken),
+              JSON.stringify(payload),
+            ),
+          );
+        }
       }
     }, 60 * 1000);
   }

@@ -10,7 +10,7 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-  public existingNotifications : Array<number>;
+  public existingNotifications: Array<number>;
   @ViewChild('notificationsList') notificationsList;
   @ViewChild('newNotificationTimeInput') newNotificationTimeInput;
 
@@ -82,7 +82,7 @@ export class SettingsComponent implements OnInit {
 
   public removeNotifications() {
     this.notificationsList.selectedOptions.selected.forEach(selectedItem => {
-      this.notificationService.removeScheduledNotification(parseInt(selectedItem._element.nativeElement.id));
+      this.notificationService.removeScheduledNotification(parseInt(selectedItem._element.nativeElement.id, 10));
     });
     this.existingNotifications = this.notificationService.getScheduledNotifications();
   }
@@ -93,12 +93,12 @@ export class SettingsComponent implements OnInit {
     const stringValue = this.newNotificationTimeInput.nativeElement.value;
     const matching = stringValue.match(timeRegEx);
 
-    if (matching) {  
-      const hours = parseInt(matching[1]);
-      const minutes = parseInt(matching[2]);
+    if (matching) {
+      const hours = parseInt(matching[1], 10);
+      const minutes = parseInt(matching[2], 10);
       if (hours < 24 && hours >= 0 && minutes < 60 && minutes >= 0) {
         this.notificationService.scheduleNewNotifcation(
-          { body: "Time to enter your current mood!" },
+          { body: 'Time to enter your current mood!' },
           60 * hours + minutes
         );
         this.existingNotifications = this.notificationService.getScheduledNotifications();
