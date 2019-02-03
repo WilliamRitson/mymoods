@@ -34,3 +34,21 @@
 <button type="button" mat-raised-button color="primary" (click)="csvInput.click()">
   <mat-icon>file_upload</mat-icon> Import CSV Data
 </button>
+<mat-card>
+  <mat-card-content>
+    <mat-selection-list #notificationsList>
+      <h3 mat-subheader>Scheduled Notification Times</h3>
+      <mat-list-option *ngFor="let notif of existingNotifications" [attr.id]="notif">
+        {{ notif/60 | floor }}:{{ notif % 60 | number:'2.0-0'}}
+      </mat-list-option>
+    </mat-selection-list>
+    <button mat-raised-button color="primary" [disabled]="notificationsList.selectedOptions.selected.length === 0" (click)="removeNotifications()">Remove Selected</button>      
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-form-field>
+      <input matInput type="time" placeholder="Time of notification" #newNotificationTimeInput>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addNotification()">Add</button>
+  </mat-card-content>
+</mat-card>

@@ -19,6 +19,7 @@ import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { LineChartModule, PieChartModule } from '@swimlane/ngx-charts';
 import { MoodPieChartComponent } from './mood-pie-chart/mood-pie-chart.component';
 import { MoodLineChartComponent } from './mood-line-chart/mood-line-chart.component';
+import { FloorPipe } from './floor.pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MoodLineChartComponent } from './mood-line-chart/mood-line-chart.compon
     NavbarComponent,
     SettingsComponent,
     MoodPieChartComponent,
-    MoodLineChartComponent
+    MoodLineChartComponent,
+    FloorPipe
   ],
   imports: [
     BrowserModule,
@@ -59,14 +61,6 @@ export class AppModule {
   private ns: NotificationService;
 
   constructor(ns: NotificationService) {
-    this.ns = ns;
-
-    const d = new Date();
-
-    console.log('Schedduling a notifcation in one minute!');
-    ns.scheduleNewNotifcation(
-      { body: 'Time to enter your current mood!' },
-      60 * d.getHours() + d.getMinutes() + 1
-    );
+    
   }
 }
