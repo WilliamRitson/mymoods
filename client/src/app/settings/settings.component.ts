@@ -20,23 +20,29 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {}
 
-  public exportAsJson() {
+  public exportMoodsAsJson() {
     const data = JSON.stringify(this.moodStorage.getMoodValues());
     const blob = new Blob([data], { type: 'application/json;charset=utf-8' });
     FileSaver.saveAs(blob, 'data.json');
   }
 
-  public exportAsCSV() {
-    const data = `time, mood
+  public exportKeywordsAsJson() {
+    const data = JSON.stringify(this.moodStorage.getKeywordValues());
+    const blob = new Blob([data], { type: 'application/json;charset=utf-8' });
+    FileSaver.saveAs(blob, 'data.json');
+  }
+
+  public exportMoodsAsCSV() {
+    const moodData = `time, mood
       ${this.moodStorage
         .getMoodValues()
         .map(moodValue => moodValue.time + ', ' + moodValue.mood)
         .join('\n')}`;
-    const blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
-    FileSaver.saveAs(blob, 'data.csv');
+    const moodBlob = new Blob([moodData], { type: 'text/csv;charset=utf-8' });
+    FileSaver.saveAs(moodBlob, 'moodValueData.csv');
   }
 
-  public importJSON(event: any): void {
+  public importMoodJSON(event: any): void {
     this.loadTextFile(event)
       .then(data => {
         const parsed = JSON.parse(data);
@@ -47,7 +53,18 @@ export class SettingsComponent implements OnInit {
       .catch(() => null);
   }
 
-  public importCSV(event: any): void {
+  public importKeywordJSON(event: any): void {
+    this.loadTextFile(event)
+      .then(data => {
+        const parsed = JSON.parse(data);
+        if (parsed) {
+          this.moodStorage.overwriteKeywordRecords(parsed);
+        }
+      })
+      .catch(() => null);
+  }
+
+  public importMoodCSV(event: any): void {
     this.loadTextFile(event)
       .then(data => {
         const rows = data.split('\n').map(row => row.split(/,\s*/));
@@ -59,7 +76,6 @@ export class SettingsComponent implements OnInit {
             mood: parseInt(row[1], 10)
           };
         }));
-
       })
       .catch(() => null);
   }
