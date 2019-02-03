@@ -22,6 +22,7 @@ import { MoodLineChartComponent } from './mood-line-chart/mood-line-chart.compon
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthGuard } from './core/auth.guard';
+import { FloorPipe } from './floor.pipe';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AuthGuard } from './core/auth.guard';
     NavbarComponent,
     SettingsComponent,
     MoodPieChartComponent,
-    MoodLineChartComponent
+    MoodLineChartComponent,
+    FloorPipe
   ],
   imports: [
     BrowserModule,
@@ -72,14 +74,5 @@ export class AppModule {
         router.navigateByUrl('/login');
       }
     });
-    this.ns = ns;
-
-    const d = new Date();
-
-    console.log('Schedduling a notifcation in one minute!');
-    ns.scheduleNewNotifcation(
-      { body: 'Time to enter your current mood!' },
-      60 * d.getHours() + d.getMinutes() + 1
-    );
   }
 }

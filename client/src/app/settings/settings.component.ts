@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MoodStorageService } from '../mood-storage.service';
 import * as FileSaver from 'file-saver';
+import { NotificationService } from '../notification.service';
+
 
 @Component({
   selector: 'app-settings',
@@ -8,7 +10,13 @@ import * as FileSaver from 'file-saver';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-  constructor(private moodStorage: MoodStorageService) {}
+  public existingNotifications : Array<number>;
+  @ViewChild('notificationsList') notificationsList;
+  @ViewChild('newNotificationTimeInput') newNotificationTimeInput;
+
+  constructor(private moodStorage: MoodStorageService, private notificationService: NotificationService) {
+    this.existingNotifications = notificationService.getScheduledNotifications();
+  }
 
   ngOnInit() {}
 
@@ -70,5 +78,31 @@ export class SettingsComponent implements OnInit {
     });
     reader.readAsText(dataFile);
     return promise;
+  }
+
+  public removeNotifications() {
+    this.notificationsList.selectedOptions.selected.forEach(selectedItem => {
+      this.notificationService.removeScheduledNotification(parseInt(selectedItem._element.nativeElement.id));
+    });
+    this.existingNotifications = this.notificationService.getScheduledNotifications();
+  }
+
+  public addNotification() {
+    const timeRegEx = /^\s*(\d{1,2})\s*:\s*(\d{2})\s*$/;
+
+    const stringValue = this.newNotificationTimeInput.nativeElement.value;
+    const matching = stringValue.match(timeRegEx);
+
+    if (matching) {  
+      const hours = parseInt(matching[1]);
+      const minutes = parseInt(matching[2]);
+      if (hours < 24 && hours >= 0 && minutes < 60 && minutes >= 0) {
+        this.notificationService.scheduleNewNotifcation(
+          { body: "Time to enter your current mood!" },
+          60 * hours + minutes
+        );
+        this.existingNotifications = this.notificationService.getScheduledNotifications();
+      }
+    }
   }
 }
