@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MoodStorageService, MoodValue } from '../mood-storage.service';
 import { Router } from '@angular/router';
 
@@ -8,28 +8,37 @@ import { Router } from '@angular/router';
   styleUrls: ['./mood-entry.component.scss']
 })
 export class MoodEntryComponent {
+  @ViewChild('keywordsInputField') keywordsInputField;
+
   constructor(private moodStorage: MoodStorageService, private router: Router) {}
 
   public currentMood: string;
-  public moods: string[] = ['Very Bad', 'Bad', 'Neutral', 'Good', 'Very Good'];
+  public moods: string[] = ['\ud83d\ude22 Very Bad', '\ud83d\ude41 Bad', '\ud83d\ude10 Neutral', '\ud83d\ude42 Good', '\ud83d\ude00 Very Good'];
 
   public entryDone() {
-    this.moodStorage.addMoodValue(this.moodStingToEnum(this.currentMood));
-    this.router.navigateByUrl('/');
+    console.log(this.currentMood);
+    console.log(this.keywordsInputField);
 
+    const splitKeywords = this.keywordsInputField.nativeElement.value
+      .toLowerCase()
+      .split(/\W+/)
+      .filter(word => word.length > 0);
+
+    this.moodStorage.addMoodValue(this.moodStingToEnum(this.currentMood), splitKeywords);
+    this.router.navigateByUrl('/');
   }
 
   private moodStingToEnum(string: String): MoodValue {
     switch (string) {
-      case 'Very Bad':
+      case this.moods[0]:
         return MoodValue.VeryBad;
-      case 'Bad':
+      case this.moods[1]:
         return MoodValue.Bad;
-      case 'Neutral':
+      case this.moods[2]:
         return MoodValue.Neutral;
-      case 'Good':
+      case this.moods[3]:
         return MoodValue.Good;
-      case 'Very Good':
+      case this.moods[4]:
         return MoodValue.VeryGood;
     }
   }

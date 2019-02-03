@@ -1,10 +1,22 @@
+<div class="mood-selector-content">
+  <mat-card class="mood-selector-content">
+      <p>How are you feeling?</p>
+      <mat-action-list class="mood-selector">
+        <button mat-list-item class="mood-selector-item" *ngFor="let mood of moods" [value]="mood" (click)="currentMood = mood" [ngClass]="{'highlighted': mood === currentMood}" >
+          {{ mood }}
+        </button>
+      </mat-action-list>
+      
+      <br/>
 
-<p>How are you feeling?</p>
-<mat-radio-group class="example-radio-group" [(ngModel)]="currentMood">
-  <mat-radio-button class="example-radio-button" *ngFor="let mood of moods" [value]="mood">
-    {{mood}}
-  </mat-radio-button>
-</mat-radio-group>
-
-<br/>
-<button (click)="entryDone()" mat-raised-button color="primary" [disabled]="currentMood === undefined">Done</button>
+      <mat-form-field>
+          <input
+            matInput
+            type="text"
+            placeholder="Today's activites? (Separate with spaces)"
+            #keywordsInputField
+          />
+        </mat-form-field>
+      <button (click)="entryDone()" mat-raised-button color="primary" [disabled]="currentMood === undefined">Done</button>    
+  </mat-card>
+</div>

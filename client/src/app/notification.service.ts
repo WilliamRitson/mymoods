@@ -17,7 +17,7 @@ export class NotificationService {
 
   constructor(private swPush: SwPush, private http: HttpClient) {
     this.allNotifications = {};
-
+    
     // If the sw is available, use it instead of normal browser notifications
     console.log('Push enabled:', swPush.isEnabled);
     if (swPush.isEnabled) {
