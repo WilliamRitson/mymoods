@@ -1,56 +1,96 @@
-<ngx-auth-firebaseui-user></ngx-auth-firebaseui-user>
+<mat-tab-group>
+  <mat-tab label="Notification Settings">
+    <mat-card>
+      <mat-card-content>
+        <mat-selection-list #notificationsList>
+          <h3 mat-subheader>Scheduled Notification Times</h3>
+          <mat-list-option
+            *ngFor="let notif of existingNotifications"
+            [attr.id]="notif"
+          >
+            {{ notif / 60 | floor }}:{{ notif % 60 | number: '2.0-0' }}
+          </mat-list-option>
+        </mat-selection-list>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="notificationsList.selectedOptions.selected.length === 0"
+          (click)="removeNotifications()"
+        >
+          Remove Selected
+        </button>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-form-field>
+          <input
+            matInput
+            type="time"
+            placeholder="Time of notification"
+            #newNotificationTimeInput
+          />
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addNotification()">
+          Add
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="User Settings">
+    <ngx-auth-firebaseui-user></ngx-auth-firebaseui-user>
+  </mat-tab>
+  <mat-tab label="Data Export">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Data Export</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <button mat-raised-button color="primary" (click)="exportAsJson()">
+          <mat-icon>get_app</mat-icon>
+          Export JSON Data
+        </button>
 
-<button mat-raised-button color="primary" (click)="exportAsJson()">
-  <mat-icon>get_app</mat-icon>
-  Export JSON Data
-</button>
+        <button mat-raised-button color="primary" (click)="exportAsCSV()">
+          <mat-icon>get_app</mat-icon>
+          Export CSV Data
+        </button>
 
-<button mat-raised-button color="primary" (click)="exportAsCSV()">
-  <mat-icon>get_app</mat-icon>
-  Export CSV Data
-</button>
+        <input
+          #jsonInput
+          hidden
+          type="file"
+          (change)="importJSON($event)"
+          placeHolder="Upload JSON Data"
+          accept=".json"
+          single
+        />
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="jsonInput.click()"
+        >
+          <mat-icon>file_upload</mat-icon> Import JSON Data
+        </button>
 
-<input
-  #jsonInput
-  hidden
-  type="file"
-  (change)="importJSON($event)"
-  placeHolder="Upload JSON Data"
-  accept=".json"
-  single
-/>
-<button type="button" mat-raised-button color="primary" (click)="jsonInput.click()">
-  <mat-icon>file_upload</mat-icon> Import JSON Data
-</button>
-
-
-<input
-  #csvInput
-  hidden
-  type="file"
-  (change)="importCSV($event)"
-  placeHolder="Upload CSV Data"
-  accept=".csv"
-  single
-/>
-<button type="button" mat-raised-button color="primary" (click)="csvInput.click()">
-  <mat-icon>file_upload</mat-icon> Import CSV Data
-</button>
-<mat-card>
-  <mat-card-content>
-    <mat-selection-list #notificationsList>
-      <h3 mat-subheader>Scheduled Notification Times</h3>
-      <mat-list-option *ngFor="let notif of existingNotifications" [attr.id]="notif">
-        {{ notif/60 | floor }}:{{ notif % 60 | number:'2.0-0'}}
-      </mat-list-option>
-    </mat-selection-list>
-    <button mat-raised-button color="primary" [disabled]="notificationsList.selectedOptions.selected.length === 0" (click)="removeNotifications()">Remove Selected</button>      
-  </mat-card-content>
-  <mat-divider></mat-divider>
-  <mat-card-content>
-    <mat-form-field>
-      <input matInput type="time" placeholder="Time of notification" #newNotificationTimeInput>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="addNotification()">Add</button>
-  </mat-card-content>
-</mat-card>
+        <input
+          #csvInput
+          hidden
+          type="file"
+          (change)="importCSV($event)"
+          placeHolder="Upload CSV Data"
+          accept=".csv"
+          single
+        />
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="csvInput.click()"
+        >
+          <mat-icon>file_upload</mat-icon> Import CSV Data
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>
